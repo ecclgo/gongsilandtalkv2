@@ -58,21 +58,24 @@ export default function LoanCal() {
   const [SubTabNum, setSubTabNum] = useState(0);
   const [paying, setPaying] = useState<Paying[]>([]);
   const [rateChange, setRateChange] = useState<Paying[]>([]);
-  
+
   const handleRowChange = (num: number | undefined, price: string) => {
     const updateRow = paying.map((input) => {
-      if(input.num === num) {
-        return { ...input, price};
+      if (input.num === num) {
+        return { ...input, price };
       }
       return input;
     });
     setPaying(updateRow);
   };
 
-  const handleRateChange = (num: number | undefined, changedRate: string | undefined) => {
+  const handleRateChange = (
+    num: number | undefined,
+    changedRate: string | undefined
+  ) => {
     const updateRow = rateChange.map((input) => {
-      if(input.num === num) {
-        return {...input, changedRate};
+      if (input.num === num) {
+        return { ...input, changedRate };
       }
       return input;
     });
@@ -80,14 +83,14 @@ export default function LoanCal() {
   };
 
   const handleAddRow = () => {
-    const newRow: Paying = { num: paying.length + 1, price: ''};
+    const newRow: Paying = { num: paying.length + 1, price: '' };
     setPaying([...paying, newRow]);
   };
 
   const handleRateRow = () => {
-    const newRow: Paying = { num: rateChange.length + 1, changedRate: ''};
+    const newRow: Paying = { num: rateChange.length + 1, changedRate: '' };
     setRateChange([...rateChange, newRow]);
-  }
+  };
 
   const handleDeleteRow = (num: number | undefined) => {
     const updatedPaying = paying.filter((input) => input.num !== num);
@@ -110,9 +113,15 @@ export default function LoanCal() {
         수 있습니다.
       </InfoText>
       <SubTabBox>
-        <SubTab1 SubTabNum={SubTabNum} onClick={() => setSubTabNum(0)}>원금균등분할</SubTab1>
-        <SubTab2 SubTabNum={SubTabNum} onClick={() => setSubTabNum(1)}>원리금균등분할</SubTab2>
-        <SubTab3 SubTabNum={SubTabNum} onClick={() => setSubTabNum(2)}>만기일시</SubTab3>
+        <SubTab1 SubTabNum={SubTabNum} onClick={() => setSubTabNum(0)}>
+          원금균등분할
+        </SubTab1>
+        <SubTab2 SubTabNum={SubTabNum} onClick={() => setSubTabNum(1)}>
+          원리금균등분할
+        </SubTab2>
+        <SubTab3 SubTabNum={SubTabNum} onClick={() => setSubTabNum(2)}>
+          만기일시
+        </SubTab3>
       </SubTabBox>
       <CheckBoxContainer>
         <CheckBox1 />
@@ -141,77 +150,66 @@ export default function LoanCal() {
         <AddPaying onClick={handleAddRow}>중도상환 추가</AddPaying>
         <AddInterest onClick={handleRateRow}>금리변동 추가</AddInterest>
       </CalcBtnBox>
-      <PayingLabel>
-        중도상환
-      </PayingLabel>
+      <PayingLabel>중도상환</PayingLabel>
       <div>
         {paying?.map((input) => (
           <PayingRow key={input.num}>
-            <PayingNumText>
-              회차
-            </PayingNumText>
+            <PayingNumText>회차</PayingNumText>
             <PayingNumber
-              type='text'
+              type="text"
               onChange={(e) => handleRowChange(input.num, e.target.value)}
             />
-            <SlashText>
-              /
-            </SlashText>
-            <PayingPriceText>
-              상환금액
-            </PayingPriceText>
+            <SlashText>/</SlashText>
+            <PayingPriceText>상환금액</PayingPriceText>
             <PayingPrice
-              type='text'
+              type="text"
               onChange={(e) => handleRowChange(input.num, e.target.value)}
             />
-            <WonInputText>
-              원
-            </WonInputText>
-            <DeleteBtn 
-              onClick={() => {handleDeleteRow(input.num)}}>
+            <WonInputText>원</WonInputText>
+            <DeleteBtn
+              onClick={() => {
+                handleDeleteRow(input.num);
+              }}
+            >
               삭제
             </DeleteBtn>
           </PayingRow>
         ))}
       </div>
       <Underline2 />
-      <InterestChangeText>
-        금리변동
-      </InterestChangeText>
-        <div>
-          {rateChange?.map((input) => (
-            <InterestChangeBox key={input.num}>
-              <RateChangeBox >
-                <RateNumber>
-                  회차
-                </RateNumber>
-                <RateNumberInput 
-                  type='text'
-                  onChange={(e) => {handleRateChange(input.num, e.target.value)}}
-                />
-                <SlashText style={{ marginTop: "20px" }}>
-                  /
-                </SlashText>
-                <ChangedRateNum>
-                  변동금리
-                </ChangedRateNum>
-                <RateChangeInput 
-                  type='text'
-                  onChange={(e) => {handleRateChange(input.num, e.target.value)}}
-                />
-                <WonInputText style={{ marginTop: "20px"}}>
-                  %
-                </WonInputText>
-                <RateDeleteBtn onClick={() => {handleDeleteRateRow(input.num)}}>
-                  삭제
-                </RateDeleteBtn>
-              </RateChangeBox>
-            </InterestChangeBox>
-          ))}
-        </div>
-      <CalcBtn>
-        대출이자 계산하기
-      </CalcBtn>
+      <InterestChangeText>금리변동</InterestChangeText>
+      <div>
+        {rateChange?.map((input) => (
+          <InterestChangeBox key={input.num}>
+            <RateChangeBox>
+              <RateNumber>회차</RateNumber>
+              <RateNumberInput
+                type="text"
+                onChange={(e) => {
+                  handleRateChange(input.num, e.target.value);
+                }}
+              />
+              <SlashText style={{ marginTop: '20px' }}>/</SlashText>
+              <ChangedRateNum>변동금리</ChangedRateNum>
+              <RateChangeInput
+                type="text"
+                onChange={(e) => {
+                  handleRateChange(input.num, e.target.value);
+                }}
+              />
+              <WonInputText style={{ marginTop: '20px' }}>%</WonInputText>
+              <RateDeleteBtn
+                onClick={() => {
+                  handleDeleteRateRow(input.num);
+                }}
+              >
+                삭제
+              </RateDeleteBtn>
+            </RateChangeBox>
+          </InterestChangeBox>
+        ))}
+      </div>
+      <CalcBtn>대출이자 계산하기</CalcBtn>
     </>
   );
 }

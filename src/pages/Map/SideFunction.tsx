@@ -1,26 +1,50 @@
-import { ArrowFunction, FunctionBox, GpsFunction, Line, MapFunction, Minus, NearFunction, Plus } from "@/components/map/SubFunction";
-import Image from "next/image";
+import {
+  FunctionBox,
+  GpsFunction,
+  Line,
+  MapFunction,
+  MapFunction2,
+  Minus,
+  Plus,
+} from '@/components/map/SubFunction';
+import Image from 'next/image';
+import { useState } from 'react';
 
 type Props = {
   PlusFunc: () => void;
   MinusFunc: () => void;
-  getCurrentPosBtn: () => void
-}
+  getCurrentPosBtn: () => void;
+  changeMapType: (mapType: string) => void;
+  removeOverlay: (currentTypeId: kakao.maps.MapTypeId) => void;
+};
 
-export default function SideFuntion({PlusFunc, MinusFunc, getCurrentPosBtn}: Props) {
+export default function SideFuntion({
+  PlusFunc,
+  MinusFunc,
+  getCurrentPosBtn,
+  changeMapType,
+  removeOverlay,
+}: Props) {
+
+  const [mapType, setMapType] = useState('');
+
+  const handleDistrict = () => {
+    if(mapType === 'USE_DISTRICT') {
+      removeOverlay(kakao.maps.MapTypeId.USE_DISTRICT);
+    }
+
+    setMapType('USE_DISTRICT');
+  };
+
+  const handleHybrid = () => {
+    setMapType('HYBRID');
+  };
+
   return (
     <>
       <FunctionBox>
-        <ArrowFunction>
-          <Image 
-            src={'/MapArrow.png'}
-            alt="MapArrow"
-            width={20}
-            height={20}
-          />
-        </ArrowFunction>
         <GpsFunction>
-          <Image 
+          <Image
             src={'/Gps.png'}
             alt="Gps"
             width={20}
@@ -29,7 +53,7 @@ export default function SideFuntion({PlusFunc, MinusFunc, getCurrentPosBtn}: Pro
           />
         </GpsFunction>
         <Minus>
-          <Image 
+          <Image
             src={'/Minus.png'}
             alt="Minus"
             width={15}
@@ -39,7 +63,7 @@ export default function SideFuntion({PlusFunc, MinusFunc, getCurrentPosBtn}: Pro
         </Minus>
         <Line />
         <Plus>
-          <Image 
+          <Image
             src={'/Plus.png'}
             alt="Plus"
             width={15}
@@ -47,10 +71,9 @@ export default function SideFuntion({PlusFunc, MinusFunc, getCurrentPosBtn}: Pro
             onClick={PlusFunc}
           />
         </Plus>
-        <MapFunction>
-          지도
-        </MapFunction>
+        <MapFunction onClick={() => {handleDistrict(); changeMapType(mapType);}}>지적도</MapFunction>
+        <MapFunction2 onClick={() => {handleHybrid(); changeMapType(mapType);}}>위성도</MapFunction2>
       </FunctionBox>
     </>
-  )
+  );
 }

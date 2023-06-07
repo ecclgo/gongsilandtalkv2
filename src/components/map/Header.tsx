@@ -1,16 +1,16 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 interface Options {
   value: string;
   label: string;
-} 
+}
 
 type Props = {
   options?: Options[] | undefined;
   onChange?: React.ChangeEventHandler<HTMLSelectElement> | undefined;
   value?: string;
-}
+};
 
 export const ModeBox = styled.div`
   box-sizing: border-box;
@@ -27,10 +27,10 @@ export const ModeBox = styled.div`
   width: 152px;
   height: 58px;
 
-  background: #FFFFFF;
+  background: #ffffff;
   border-width: 1px 1px 1px 0px;
   border-style: solid;
-  border-color: #D5D4D4;
+  border-color: #d5d4d4;
 `;
 
 export const SelectBtn = styled.select`
@@ -67,7 +67,7 @@ export const Select = ({ options, value, onChange }: Props) => {
         </Option>
       ))}
     </SelectBtn>
-  )
+  );
 };
 
 export const FilterHeader = styled.div`
@@ -77,8 +77,8 @@ export const FilterHeader = styled.div`
   height: 58px;
   top: -1px;
   left: 151px;
-  border: 1px solid #D5D4D4;
-  background-color: #FFFFFF;
+  border: 1px solid #d5d4d4;
+  background-color: #ffffff;
 `;
 
 export const FilterBox = styled.div`
@@ -107,8 +107,8 @@ export const ProductType = styled.div`
 
   width: 85px;
   height: 36px;
-  background: #FFFFFF;
-  border: 1px solid #D5D4D4;
+  background: #ffffff;
+  border: 1px solid #d5d4d4;
   border-radius: 6px;
 
   font-family: 'Spoqa Han Sans Neo';
@@ -121,7 +121,7 @@ export const ProductType = styled.div`
   align-items: center;
   letter-spacing: -0.03em;
 
-  color: #9D9999;
+  color: #9d9999;
   cursor: pointer;
 `;
 
@@ -131,7 +131,7 @@ export const ArrowBtn = styled.div`
   margin-left: 3px;
   border-top: 4px solid transparent;
   border-bottom: 4px solid transparent;
-  border-right: 4px solid #9D9999;
+  border-right: 4px solid #9d9999;
   transform: rotate(270deg);
 `;
 
@@ -147,8 +147,8 @@ export const TypePrice = styled.div`
   width: 115px;
   height: 36px;
 
-  background: #FFFFFF;
-  border: 1px solid #D5D4D4;
+  background: #ffffff;
+  border: 1px solid #d5d4d4;
   border-radius: 6px;
   font-family: 'Spoqa Han Sans Neo';
   font-style: normal;
@@ -160,7 +160,7 @@ export const TypePrice = styled.div`
   align-items: center;
   letter-spacing: -0.03em;
 
-  color: #9D9999;
+  color: #9d9999;
   cursor: pointer;
 `;
 
@@ -175,8 +175,8 @@ export const Area = styled.div`
 
   width: 60px;
   height: 36px;
-  background: #FFFFFF;
-  border: 1px solid #D5D4D4;
+  background: #ffffff;
+  border: 1px solid #d5d4d4;
   border-radius: 6px;
   font-family: 'Spoqa Han Sans Neo';
   font-style: normal;
@@ -188,7 +188,7 @@ export const Area = styled.div`
   align-items: center;
   letter-spacing: -0.03em;
 
-  color: #9D9999;
+  color: #9d9999;
   cursor: pointer;
 `;
 
@@ -204,8 +204,8 @@ export const YearOfTran = styled.div`
   width: 85px;
   height: 36px;
 
-  background: #FFFFFF;
-  border: 1px solid #D5D4D4;
+  background: #ffffff;
+  border: 1px solid #d5d4d4;
   border-radius: 6px;
 
   font-family: 'Spoqa Han Sans Neo';
@@ -218,7 +218,7 @@ export const YearOfTran = styled.div`
   align-items: center;
   letter-spacing: -0.03em;
 
-  color: #9D9999;
+  color: #9d9999;
   cursor: pointer;
 `;
 
@@ -234,8 +234,8 @@ export const YearOfBuilding = styled.div`
   width: 85px;
   height: 36px;
 
-  background: #FFFFFF;
-  border: 1px solid #D5D4D4;
+  background: #ffffff;
+  border: 1px solid #d5d4d4;
   border-radius: 6px;
   font-family: 'Spoqa Han Sans Neo';
   font-style: normal;
@@ -247,7 +247,7 @@ export const YearOfBuilding = styled.div`
   align-items: center;
   letter-spacing: -0.03em;
 
-  color: #9D9999;
+  color: #9d9999;
   cursor: pointer;
 `;
 
@@ -263,8 +263,8 @@ export const MainUsage = styled.div`
   width: 72px;
   height: 36px;
 
-  background: #FFFFFF;
-  border: 1px solid #D5D4D4;
+  background: #ffffff;
+  border: 1px solid #d5d4d4;
   border-radius: 6px;
   font-family: 'Spoqa Han Sans Neo';
   font-style: normal;
@@ -276,7 +276,7 @@ export const MainUsage = styled.div`
   align-items: center;
   letter-spacing: -0.03em;
 
-  color: #9D9999;
+  color: #9d9999;
   cursor: pointer;
 `;
 
@@ -290,8 +290,8 @@ export const OrderBy = styled.div`
 
   width: 38px;
   height: 36px;
-  background: #FFFFFF;
-  border: 1px solid #D5D4D4;
+  background: #ffffff;
+  border: 1px solid #d5d4d4;
   border-radius: 6px;
   cursor: pointer;
 `;

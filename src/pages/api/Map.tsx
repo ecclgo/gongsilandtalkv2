@@ -6,7 +6,6 @@ type Data = {
   name: string;
 };
 
-
 const REST_API_KEY = process.env.REST_API_KEY;
 
 const baseURL = `https://dapi.kakao.com/`;
@@ -22,7 +21,10 @@ const baseApiInstance = axios.create({
   },
 });
 
-export default async function CallMap( req: NextApiRequest, res: NextApiResponse<Data>) {
+export default async function CallMap(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) {
   try {
     const response = await baseApiInstance.get(
       `v2/maps/sdk.js?appkey=46ddd2a3fad8c2c88bdfef2b79483423&libraries=services,clusterer`
@@ -31,4 +33,4 @@ export default async function CallMap( req: NextApiRequest, res: NextApiResponse
   } catch (error) {
     console.log('ERROR: ', error);
   }
-};
+}

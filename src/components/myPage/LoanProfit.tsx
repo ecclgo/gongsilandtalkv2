@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 type Props = {
   SubTabNum?: number;
-}
+};
 
 export const InfoText = styled.div`
   position: absolute;
@@ -48,7 +48,6 @@ export const SubTab1 = styled.div<Props>`
   width: 116px;
   height: 40px;
 
-  
   font-family: 'Spoqa Han Sans Neo';
   font-style: normal;
   font-weight: 500;
@@ -58,9 +57,11 @@ export const SubTab1 = styled.div<Props>`
   align-items: center;
   text-align: center;
   letter-spacing: -0.03em;
-  
-  background-color: ${(props) => `${props.SubTabNum === 0 ? '#FFFFFF' : '#f0f0f0'}`};;
-  border: ${(props) => `${props.SubTabNum === 0 ? '1px solid #9d9999' : '1px solid #d5d4d4'}`};
+
+  background-color: ${(props) =>
+    `${props.SubTabNum === 0 ? '#FFFFFF' : '#f0f0f0'}`};
+  border: ${(props) =>
+    `${props.SubTabNum === 0 ? '1px solid #9d9999' : '1px solid #d5d4d4'}`};
   color: ${(props) => `${props.SubTabNum === 0 ? '#2a2828' : '#9d9999'}`};
   cursor: pointer;
 `;
@@ -84,14 +85,16 @@ export const SubTab2 = styled.div<Props>`
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
-  
+
   display: flex;
   align-items: center;
   text-align: center;
   letter-spacing: -0.03em;
-  
-  background-color: ${(props) => `${props.SubTabNum === 1 ? '#FFFFFF' : '#f0f0f0'}`};;
-  border: ${(props) => `${props.SubTabNum === 1 ? '1px solid #9d9999' : '1px solid #d5d4d4'}`};
+
+  background-color: ${(props) =>
+    `${props.SubTabNum === 1 ? '#FFFFFF' : '#f0f0f0'}`};
+  border: ${(props) =>
+    `${props.SubTabNum === 1 ? '1px solid #9d9999' : '1px solid #d5d4d4'}`};
   color: ${(props) => `${props.SubTabNum === 1 ? '#2a2828' : '#9d9999'}`};
   cursor: pointer;
 `;
@@ -112,14 +115,16 @@ export const SubTab3 = styled.div<Props>`
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
-  
+
   display: flex;
   align-items: center;
   text-align: center;
   letter-spacing: -0.03em;
-  
-  background-color: ${(props) => `${props.SubTabNum === 2 ? '#FFFFFF' : '#f0f0f0'}`};;
-  border: ${(props) => `${props.SubTabNum === 2 ? '1px solid #9d9999' : '1px solid #d5d4d4'}`};
+
+  background-color: ${(props) =>
+    `${props.SubTabNum === 2 ? '#FFFFFF' : '#f0f0f0'}`};
+  border: ${(props) =>
+    `${props.SubTabNum === 2 ? '1px solid #9d9999' : '1px solid #d5d4d4'}`};
   color: ${(props) => `${props.SubTabNum === 2 ? '#2a2828' : '#9d9999'}`};
   cursor: pointer;
 `;
@@ -473,9 +478,8 @@ export const PayingRow = styled.div`
   top: 720px;
   width: 1450px;
   height: 70px;
-  
 
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 `;
 
 export const PayingNumText = styled.span`
@@ -507,9 +511,9 @@ export const PayingNumber = styled.input`
 
   width: 48px;
   height: 44px;
-  background: #FFFFFF;
+  background: #ffffff;
 
-  border: 1px solid #D5D4D4;
+  border: 1px solid #d5d4d4;
   border-radius: 5px;
 `;
 
@@ -526,8 +530,8 @@ export const PayingPrice = styled.input`
   width: 171px;
   height: 44px;
 
-  background: #FFFFFF;
-  border: 1px solid #D5D4D4;
+  background: #ffffff;
+  border: 1px solid #d5d4d4;
   border-radius: 5px;
 `;
 
@@ -606,7 +610,7 @@ export const DeleteBtn = styled.button`
   left: 300px;
   top: 0px;
 
-  background: #FFFFFF;
+  background: #ffffff;
 
   border: 1px solid #686564;
   border-radius: 5px;
@@ -631,10 +635,10 @@ export const CalcBtn = styled.button`
   position: relative;
   width: 976px;
   height: 50px;
-  left: calc(50% - 976px/2);
+  left: calc(50% - 976px / 2);
   top: 850px;
 
-  background: #F16341;
+  background: #f16341;
   border-radius: 5px;
 
   font-family: 'Spoqa Han Sans Neo';
@@ -648,7 +652,7 @@ export const CalcBtn = styled.button`
   text-align: center;
   letter-spacing: -0.03em;
 
-  color: #FFFFFF;
+  color: #ffffff;
 `;
 
 export const Underline2 = styled.div`
@@ -658,7 +662,7 @@ export const Underline2 = styled.div`
   height: 0px;
   left: 472px;
   top: 700px;
-  border: 1px solid #F0F0F0;
+  border: 1px solid #f0f0f0;
 `;
 
 export const InterestChangeBox = styled.div`
@@ -667,7 +671,6 @@ export const InterestChangeBox = styled.div`
   height: 98px;
   left: 472px;
   top: 670px;
-  
 `;
 
 export const InterestChangeText = styled.span`
@@ -687,7 +690,7 @@ export const InterestChangeText = styled.span`
   align-items: center;
   letter-spacing: -0.03em;
 
-  color: #2A2828;
+  color: #2a2828;
 `;
 
 export const PayingLabel = styled.span`
@@ -777,8 +780,8 @@ export const RateNumberInput = styled.input`
   width: 48px;
   height: 44px;
 
-  background: #FFFFFF;
-  border: 1px solid #D5D4D4;
+  background: #ffffff;
+  border: 1px solid #d5d4d4;
   border-radius: 5px;
 `;
 
@@ -794,9 +797,9 @@ export const RateChangeInput = styled.input`
   width: 171px;
   height: 44px;
 
-  background: #FFFFFF;
+  background: #ffffff;
 
-  border: 1px solid #D5D4D4;
+  border: 1px solid #d5d4d4;
   border-radius: 5px;
 `;
 
@@ -813,7 +816,7 @@ export const RateDeleteBtn = styled.button`
   left: 300px;
   margin-top: 20px;
 
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid #686564;
   border-radius: 5px;
 

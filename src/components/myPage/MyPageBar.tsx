@@ -25,6 +25,7 @@ export const TopBar = styled.div`
   height: 50px;
   left: 0px;
   top: 0px;
+  z-index: 99999;
   background-color: #ffffff;
 `;
 
@@ -51,6 +52,7 @@ export const TopBarText = styled.span`
   align-items: center;
   text-align: center;
   letter-spacing: -0.03em;
+  z-index: 99999;
 `;
 
 export const CloseBtn = styled.div`
@@ -62,6 +64,7 @@ export const CloseBtn = styled.div`
   left: 20px;
   top: 30%;
   cursor: pointer;
+  z-index: 99999;
 `;
 
 export const MyInfoBox = styled.div`
@@ -71,6 +74,7 @@ export const MyInfoBox = styled.div`
   left: 0px;
   top: 51px;
   background-color: #ffffff;
+  z-index: 99999;
 `;
 
 export const LoginInfo = styled.span`
@@ -91,6 +95,7 @@ export const LoginInfo = styled.span`
   letter-spacing: -0.03em;
 
   color: #343232;
+  z-index: 99999;
 `;
 
 export const LoginBtn = styled.button`
@@ -120,6 +125,7 @@ export const LoginBtn = styled.button`
   align-items: center;
   text-align: center;
   letter-spacing: -0.03em;
+  z-index: 99999;
 `;
 
 export const RegiBtn = styled.button`

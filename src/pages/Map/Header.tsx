@@ -1,6 +1,20 @@
-import { Area, ArrowBtn, FilterBox, FilterHeader, MainUsage, ModeBox, OrderBy, ProductType, Select, SelectBtn, TypePrice, YearOfBuilding, YearOfTran } from "@/components/map/Header";
-import Image from "next/image";
-import React, { useState } from "react";
+import {
+  Area,
+  ArrowBtn,
+  FilterBox,
+  FilterHeader,
+  MainUsage,
+  ModeBox,
+  OrderBy,
+  ProductType,
+  Select,
+  SelectBtn,
+  TypePrice,
+  YearOfBuilding,
+  YearOfTran,
+} from '@/components/map/Header';
+import Image from 'next/image';
+import React, { useState } from 'react';
 
 export default function Header() {
   const [selectOption, setSelectOption] = useState('');
@@ -17,7 +31,7 @@ export default function Header() {
   return (
     <>
       <ModeBox>
-        <Select 
+        <Select
           options={options}
           value={selectOption}
           onChange={handleSelectChange}
@@ -49,16 +63,11 @@ export default function Header() {
               <ArrowBtn />
             </MainUsage>
             <OrderBy>
-              <Image 
-                src={'/Order.png'}
-                alt="Order"
-                width={20}
-                height={20}
-              />
+              <Image src={'/Order.png'} alt="Order" width={20} height={20} />
             </OrderBy>
           </FilterBox>
         </FilterHeader>
       </ModeBox>
     </>
-  )
+  );
 }

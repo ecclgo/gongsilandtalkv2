@@ -1,8 +1,7 @@
-import Layout from "./Layout";
-import LoadMap from "./LoadMap";
+import Layout from './Layout';
+import LoadMap from './LoadMap';
 
 export default function Map() {
-
   return (
     <>
       <div>
@@ -11,5 +10,5 @@ export default function Map() {
         </Layout>
       </div>
     </>
-  )
-};
+  );
+}

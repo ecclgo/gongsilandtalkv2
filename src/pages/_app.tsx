@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import Layout from '@/components/Layout';
 import type { AppProps } from 'next/app';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';

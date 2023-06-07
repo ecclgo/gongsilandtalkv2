@@ -14,7 +14,9 @@ export default function Profit() {
   const [SubTab, setSubTab] = useState(0);
 
   return (
-    <div style={{ width: "1920px", height: "1920px", backgroundColor: "#FFFFFF"}}>
+    <div
+      style={{ width: '1920px', height: '1920px', backgroundColor: '#FFFFFF' }}
+    >
       <ProfitGlobal>
         <ProfitText>수익률 계산기</ProfitText>
         <SubTabBox>
