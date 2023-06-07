@@ -1,7 +1,13 @@
 import { ArrowFunction, FunctionBox, GpsFunction, Line, MapFunction, Minus, NearFunction, Plus } from "@/components/map/SubFunction";
 import Image from "next/image";
 
-export default function SideFuntion() {
+type Props = {
+  PlusFunc: () => void;
+  MinusFunc: () => void;
+  getCurrentPosBtn: () => void
+}
+
+export default function SideFuntion({PlusFunc, MinusFunc, getCurrentPosBtn}: Props) {
   return (
     <>
       <FunctionBox>
@@ -19,6 +25,7 @@ export default function SideFuntion() {
             alt="Gps"
             width={20}
             height={20}
+            onClick={getCurrentPosBtn}
           />
         </GpsFunction>
         <Minus>
@@ -27,6 +34,7 @@ export default function SideFuntion() {
             alt="Minus"
             width={15}
             height={15}
+            onClick={MinusFunc}
           />
         </Minus>
         <Line />
@@ -36,6 +44,7 @@ export default function SideFuntion() {
             alt="Plus"
             width={15}
             height={15}
+            onClick={PlusFunc}
           />
         </Plus>
         <MapFunction>

@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import SearchInput from "./SearchInput";
-
-type Props = {
-  status?: number | string;
-  result?: any;
-}
+import { FaSearch } from "react-icons/fa";
+import SideFuntion from "./SideFunction";
 
 type LatLng = {
   lat: number;
@@ -14,9 +11,11 @@ type LatLng = {
 type State = {
   center?: LatLng;
   isPanto?: boolean
-}
+};
 
 export default function LoadMap() {
+  let [currLevel, setCurrLevel] = useState(3);
+
   const [state, setState] = useState<State>({
     center: { 
       lat: 33.450701,
@@ -27,53 +26,101 @@ export default function LoadMap() {
 
   const [searchAddress, setSearchAddress] = useState('');
 
-  const SearchMap = () => {
-    const geocoder = new kakao.maps.services.Geocoder();
+  useEffect(() => {
+    const mapScript = document.createElement('script');
 
-    let callback: any = function({result, status}: Props) {
-      if(status === kakao.maps.services.Status.OK) {
-        const newSearch = result[0];
+    mapScript.async = true;
+    mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=1f953fbfd79ff422d8360a0c7c816cc1&libraries=services,clusterer&autoload=false`;
+
+    document.head.appendChild(mapScript);
+    const onLoadKakaoMap = () => {
+      window.kakao.maps.load(() => {
+        const mapContainer: HTMLElement | null = document.getElementById('map');
+        const mapOption = {
+          center: new kakao.maps.LatLng(state.center?.lat!, state.center?.lng!),
+          level: 3
+        };
+        new window.kakao.maps.Map(mapContainer!, mapOption);
+      });
+    };
+    mapScript.addEventListener('load', onLoadKakaoMap);
+  }, [state]);
+
+  const handleConvertClick = () => {
+    // 주소-좌표 변환 객체를 생성
+    let geocoder = new kakao.maps.services.Geocoder();
+
+    // 주소로 좌표를 검색
+    geocoder.addressSearch(searchAddress, function(result, status) {
+    // 정상적으로 검색이 완료됐으면 
+    if (status === kakao.maps.services.Status.OK) {
+        var coords = new kakao.maps.LatLng(parseFloat(result[0].y), parseFloat(result[0].x));
         setState({
           center: {
-            lat: newSearch.y,
-            lng: newSearch.x
+            lat: coords.getLat(),
+            lng: coords.getLng()
           }
         })
       }
-    };
-    geocoder.addressSearch(`${searchAddress}`, callback);
-  };
+    }
+  )};
 
   const handleSearchAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchAddress(e.target.value);
   };
 
-  useEffect(() => {
-    const mapScript = document.createElement('script');
-
-    mapScript.async = true;
-    mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=1f953fbfd79ff422d8360a0c7c816cc1&autoload=false&libraries=services,clusterer`;
-
-    document.head.appendChild(mapScript);
-    const onLoadKakaoMap = () => {
-      window.kakao.maps.load(() => {
-        const mapContainer: any = document.getElementById('map');
-        const mapOption = {
-          center: new kakao.maps.LatLng(state.center?.lat!, state.center?.lng!),
-          level: 3
-        };
-        new window.kakao.maps.Map(mapContainer, mapOption);
-      });
+  //  확대 함수
+  const PlusFunc = () => {
+    const mapContainer: HTMLElement | null = document.getElementById('map');
+    const mapOption = {
+      center: new kakao.maps.LatLng(state.center?.lat!, state.center?.lng!),
+      level: currLevel
     };
-    mapScript.addEventListener('load', onLoadKakaoMap);
-  }, []);
+    let map = new kakao.maps.Map(mapContainer!, mapOption);
+    setCurrLevel(currLevel < 1 ? 1 : currLevel -= 1);
+    map.setLevel(currLevel, { animate: true });
+  };
+
+  //  축소 함수
+  const MinusFunc = () => {
+    const mapContainer: HTMLElement | null = document.getElementById('map');
+    const mapOption = {
+      center: new kakao.maps.LatLng(state.center?.lat!, state.center?.lng!),
+      level: currLevel
+    };
+    let map = new kakao.maps.Map(mapContainer!, mapOption);
+    setCurrLevel(currLevel > 14 ? 14 : currLevel += 1);
+    map.setLevel(currLevel, {animate: true});
+  };
+
+  //  현재위치
+  const currLocation = (pos: any) => {
+    let currentPos = new kakao.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+
+    const mapContainer: HTMLElement | null = document.getElementById('map');
+    const mapOption = {
+      center: new kakao.maps.LatLng(state.center?.lat!, state.center?.lng!),
+      level: currLevel
+    };
+    let map = new kakao.maps.Map(mapContainer!, mapOption);
+
+    map.panTo(currentPos);
+  };
+
+  const getCurrentPosBtn = () => {
+    navigator.geolocation.getCurrentPosition(currLocation);
+  }
 
   return(
     <>
       <div>
         <div id="map" style={{ position: "absolute", width: "1920px", height: "860px", left: "0px", top: "120px" }}></div>
+        <SideFuntion PlusFunc={PlusFunc} MinusFunc={MinusFunc} getCurrentPosBtn={getCurrentPosBtn} />
       </div>
-      <SearchInput handleSearchAddress={handleSearchAddress} SearchMap={SearchMap} state={state} setSearchAddress={setSearchAddress} searchAddress={searchAddress} />
+      <SearchInput handleSearchAddress={handleSearchAddress} handleConvertClick={handleConvertClick} />
+      <button style={{ position: "absolute", top: "135px", left: "10px", zIndex: "999999", cursor: "pointer" }} onClick={() => {handleConvertClick();}}>
+        <FaSearch className="search-icon" />
+      </button>
     </>
   )
 };
