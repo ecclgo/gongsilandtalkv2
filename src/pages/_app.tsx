@@ -2,7 +2,7 @@
 import Layout from '@/components/Layout';
 import type { AppProps } from 'next/app';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
-import LoadMap from './Map/LoadMap';
+import { RecoilRoot } from 'recoil';
 
 <link
   href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap"
@@ -24,10 +24,12 @@ const theme = extendTheme({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider theme={theme}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </ChakraProvider>
+    <RecoilRoot>
+      <ChakraProvider theme={theme}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ChakraProvider>
+    </RecoilRoot>
   );
 }

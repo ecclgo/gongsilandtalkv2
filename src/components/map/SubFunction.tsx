@@ -12,7 +12,7 @@ export const FunctionBox = styled.div`
   height: 316px;
   left: 1851px;
   top: 152px;
-  z-index: 99999;
+  z-index: 10000;
 `;
 
 export const GpsFunction = styled.div`
@@ -162,7 +162,7 @@ export const SearchInputBox = styled.div`
   left: 0%;
   top: 120px;
   bottom: 84.63%;
-  z-index: 999999;
+  z-index: 999998;
   width: 360px;
   height: 50px;
   background-color: #ffffff;

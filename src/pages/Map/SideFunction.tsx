@@ -25,11 +25,10 @@ export default function SideFuntion({
   changeMapType,
   removeOverlay,
 }: Props) {
-
   const [mapType, setMapType] = useState('');
 
   const handleDistrict = () => {
-    if(mapType === 'USE_DISTRICT') {
+    if (mapType === 'USE_DISTRICT') {
       removeOverlay(kakao.maps.MapTypeId.USE_DISTRICT);
     }
 
@@ -71,8 +70,22 @@ export default function SideFuntion({
             onClick={PlusFunc}
           />
         </Plus>
-        <MapFunction onClick={() => {handleDistrict(); changeMapType(mapType);}}>지적도</MapFunction>
-        <MapFunction2 onClick={() => {handleHybrid(); changeMapType(mapType);}}>위성도</MapFunction2>
+        <MapFunction
+          onClick={() => {
+            handleDistrict();
+            changeMapType(mapType);
+          }}
+        >
+          지적도
+        </MapFunction>
+        <MapFunction2
+          onClick={() => {
+            handleHybrid();
+            changeMapType(mapType);
+          }}
+        >
+          위성도
+        </MapFunction2>
       </FunctionBox>
     </>
   );

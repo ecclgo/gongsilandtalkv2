@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import SearchInput from './SearchInput';
 import { FaSearch } from 'react-icons/fa';
 import SideFuntion from './SideFunction';
-import CurrentLoc from '../../../public/CurrentLoc.png';
 
 type LatLng = {
   lat?: number;
@@ -106,7 +105,7 @@ export default function LoadMap() {
   const currLocation = (pos: any) => {
     let currentPos = new kakao.maps.LatLng(
       pos?.coords?.latitude,
-      pos?.coords?.longitude,
+      pos?.coords?.longitude
     );
 
     const mapContainer: HTMLElement | null = document.getElementById('map');
@@ -123,7 +122,7 @@ export default function LoadMap() {
         lng: currentPos.getLng(),
       },
     });
-  };  
+  };
 
   const getCurrentPosBtn = () => {
     navigator.geolocation.getCurrentPosition(currLocation);
@@ -131,7 +130,6 @@ export default function LoadMap() {
 
   let currentTypeId: any;
   const changeMapType = (mapType: string) => {
-
     const mapContainer: HTMLElement | null = document.getElementById('map');
     const mapOption = {
       center: new kakao.maps.LatLng(state.center?.lat!, state.center?.lng!),
@@ -139,22 +137,21 @@ export default function LoadMap() {
     };
     let map = new kakao.maps.Map(mapContainer!, mapOption);
 
-
     let changeMaptype: any;
 
-    if(mapType === 'HYBRID') {
+    if (mapType === 'HYBRID') {
       changeMaptype = kakao.maps.MapTypeId.HYBRID;
     } else if (mapType === 'USE_DISTRICT') {
       changeMaptype = kakao.maps.MapTypeId.USE_DISTRICT;
     }
 
-    if(currentTypeId) {
+    if (currentTypeId) {
       map.removeOverlayMapTypeId(currentTypeId);
-    };
+    }
 
     map.addOverlayMapTypeId(changeMaptype);
-    
-    currentTypeId = changeMaptype; 
+
+    currentTypeId = changeMaptype;
   };
 
   const removeOverlay = () => {
@@ -166,7 +163,7 @@ export default function LoadMap() {
     let map = new kakao.maps.Map(mapContainer!, mapOption);
 
     map.removeOverlayMapTypeId(currentTypeId);
-  }
+  };
 
   return (
     <>
@@ -179,6 +176,7 @@ export default function LoadMap() {
             height: '860px',
             left: '0px',
             top: '120px',
+            zIndex: 3,
           }}
         ></div>
         <SideFuntion
@@ -192,7 +190,6 @@ export default function LoadMap() {
       <SearchInput
         handleSearchAddress={handleSearchAddress}
         handleConvertClick={handleConvertClick}
-        
       />
       <button
         style={{
@@ -210,4 +207,4 @@ export default function LoadMap() {
       </button>
     </>
   );
-};
+}
