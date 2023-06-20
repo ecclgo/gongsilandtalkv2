@@ -152,7 +152,6 @@ export const JisanCoup = styled.div`
   border: 1px solid #D5D4D4;
   border-radius: 50px;
 
-  
   width: 136px;
   height: 34px;
 
