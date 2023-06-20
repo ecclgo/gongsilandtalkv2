@@ -3,10 +3,11 @@ import styled from 'styled-components';
 type Props = {
   changeSubMenu?: number;
   changeSubMenuBox?: number;
+  isOpen?: boolean;
 };
 
-export const ProductTypeBox = styled.div`
-  display: flex;
+export const ProductTypeBox = styled.div<Props>`
+  display: ${(props) => `${props.isOpen ? 'flex' : 'none'}`};
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;
@@ -22,7 +23,6 @@ export const ProductTypeBox = styled.div`
 
   filter: drop-shadow(0px 0px 15px rgba(42, 40, 40, 0.1));
   border-radius: 5px;
-  display: flex;
   z-index: 999999;
 `;
 

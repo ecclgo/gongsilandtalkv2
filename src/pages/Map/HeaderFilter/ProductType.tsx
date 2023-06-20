@@ -9,7 +9,14 @@ import {
   Jisan,
   Office,
 } from '@/components/map/FilterMenu/ProductType/CommerceType';
-import { ApartCoup, BuildingCoup, CouSubBox, CouponType, JisanCoup, OfficetelCoup } from '@/components/map/FilterMenu/ProductType/CouponType';
+import {
+  ApartCoup,
+  BuildingCoup,
+  CouSubBox,
+  CouponType,
+  JisanCoup,
+  OfficetelCoup,
+} from '@/components/map/FilterMenu/ProductType/CouponType';
 import {
   Apartment,
   CommerceHouse,
@@ -26,7 +33,7 @@ import {
   TypeLine,
 } from '@/components/map/FilterMenu/ProductType/HouseType';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type Object = {
   type: string | null;
@@ -37,18 +44,42 @@ type Props = {
   selectOption: string;
   setProductType: any;
   productType: Object;
+  isOpen: boolean;
+  setIsOpen: any;
 };
 
-export default function ProductType({ selectOption, setProductType }: Props) {
-
+export default function ProductType({
+  selectOption,
+  setProductType,
+  isOpen,
+  setIsOpen,
+}: Props) {
   const [changeSubMenuBox, setChangeSubMenuBox] = useState(0);
   const [changeSubMenu, setChangeSubMenu] = useState(0);
+  const boxRef = useRef<HTMLDivElement>(null);
+
+  const handleDivBox = (e: any) => {
+    if (
+      boxRef.current &&
+      boxRef.current instanceof Element &&
+      !boxRef.current.contains(e.target)
+    ) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleDivBox);
+    return () => {
+      document.removeEventListener('mousedown', handleDivBox);
+    };
+  }, []);
 
   const handleProductType = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     const targetElement = e.target as HTMLElement;
-    setProductType((prevState: Object) => {
+    setProductType(() => {
       return {
         type: 'house',
         sub: [targetElement.id],
@@ -60,7 +91,7 @@ export default function ProductType({ selectOption, setProductType }: Props) {
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     const targetElement = e.target as HTMLElement;
-    setProductType((prevState: Object) => {
+    setProductType(() => {
       return {
         type: 'commerce',
         sub: [targetElement.id],
@@ -68,25 +99,50 @@ export default function ProductType({ selectOption, setProductType }: Props) {
     });
   };
 
+  const handleCouponType = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    const targetElement = e.target as HTMLElement;
+    setProductType(() => {
+      return {
+        type: 'coupon',
+        sub: [targetElement.id],
+      };
+    });
+  };
+
   const handleResetBtn = () => {
-    if(changeSubMenuBox === 0) {
+    if (changeSubMenuBox === 0) {
       setChangeSubMenu(0);
       setProductType({
         type: 'house',
-        sub: ['아파트']
+        sub: ['아파트'],
       });
     } else if (changeSubMenuBox === 1) {
       setChangeSubMenu(6);
       setProductType({
         type: 'commerce',
-        sub: ['상가']
+        sub: ['상가'],
+      });
+    } else {
+      setChangeSubMenu(12);
+      setProductType({
+        type: 'coupon',
+        sub: ['아파트 분양권'],
       });
     }
   };
 
+  const handleOverlay = (e: any) => {
+    if (e.target === e.currentTarget) {
+      // console.log('div 창 밖 이벤트');
+      console.log('div 창 안 이벤트');
+    }
+  };
+
   return (
-    <>
-      <ProductTypeBox>
+    <div>
+      <ProductTypeBox isOpen={isOpen} ref={boxRef}>
         <ProductTypeText>매물 종류</ProductTypeText>
         <ProductTypeSubBox>
           <FilterType>
@@ -95,7 +151,7 @@ export default function ProductType({ selectOption, setProductType }: Props) {
                 setChangeSubMenuBox(0);
                 setProductType({
                   type: 'house',
-                  sub: ['아파트']
+                  sub: ['아파트'],
                 });
                 setChangeSubMenu(0);
               }}
@@ -108,7 +164,7 @@ export default function ProductType({ selectOption, setProductType }: Props) {
                 setChangeSubMenuBox(1);
                 setProductType({
                   type: 'commerce',
-                  sub: ['상가']
+                  sub: ['상가'],
                 });
                 setChangeSubMenu(6);
               }}
@@ -116,20 +172,25 @@ export default function ProductType({ selectOption, setProductType }: Props) {
             >
               상업용
             </CommerceType>
-            {selectOption === 'Real' ? '' : 
-              (
-                <>
-                  <CouponType
-                    onClick={() => {
-                      setChangeSubMenuBox(2);
-                    }}
-                    changeSubMenuBox={changeSubMenuBox}
-                  >
-                    분양권
-                  </CouponType>
-                </>
-              )
-            }
+            {selectOption === 'Real' ? (
+              ''
+            ) : (
+              <>
+                <CouponType
+                  onClick={() => {
+                    setChangeSubMenuBox(2);
+                    setProductType({
+                      type: 'coupon',
+                      sub: ['아파트 분양권'],
+                    });
+                    setChangeSubMenu(12);
+                  }}
+                  changeSubMenuBox={changeSubMenuBox}
+                >
+                  분양권
+                </CouponType>
+              </>
+            )}
           </FilterType>
           <TypeLine />
           {changeSubMenuBox === 0 ? (
@@ -197,9 +258,7 @@ export default function ProductType({ selectOption, setProductType }: Props) {
                 </MultiHouse>
               </HouseTypeSubMenuBox>
             </>
-          ) : 
-          changeSubMenuBox === 1 ? 
-          (
+          ) : changeSubMenuBox === 1 ? (
             <>
               <CommerceTypeSubMenuBox>
                 <CommerceBud
@@ -264,39 +323,64 @@ export default function ProductType({ selectOption, setProductType }: Props) {
                 </Factory>
               </CommerceTypeSubMenuBox>
             </>
-          )
-          :
-          (
+          ) : (
             <>
               <CouSubBox>
-                <ApartCoup>
+                <ApartCoup
+                  id="아파트 분양권"
+                  onClick={(e) => {
+                    handleCouponType(e);
+                    setChangeSubMenu(12);
+                  }}
+                  changeSubMenu={changeSubMenu}
+                >
                   아파트 분양권
                 </ApartCoup>
-                <OfficetelCoup>
+                <OfficetelCoup
+                  id="오피스텔 분양권"
+                  onClick={(e) => {
+                    handleCouponType(e);
+                    setChangeSubMenu(13);
+                  }}
+                  changeSubMenu={changeSubMenu}
+                >
                   오피스텔 분양권
                 </OfficetelCoup>
-                <BuildingCoup>
+                <BuildingCoup
+                  id="상가 분양권"
+                  onClick={(e) => {
+                    handleCouponType(e);
+                    setChangeSubMenu(14);
+                  }}
+                  changeSubMenu={changeSubMenu}
+                >
                   상가 분양권
                 </BuildingCoup>
-                <JisanCoup>
+                <JisanCoup
+                  id="지식산업센터 분양권"
+                  onClick={(e) => {
+                    handleCouponType(e);
+                    setChangeSubMenu(15);
+                  }}
+                  changeSubMenu={changeSubMenu}
+                >
                   지식산업센터 분양권
                 </JisanCoup>
               </CouSubBox>
             </>
-          )
-          }
-          <ResetBox
-            onClick={() => {
-              handleResetBtn();
-            }}
-          >
-            <ResetBtn>
+          )}
+          <ResetBox>
+            <ResetBtn
+              onClick={() => {
+                handleResetBtn();
+              }}
+            >
               <Image src={'/ResetBtn.png'} alt="Reset" width={12} height={12} />
               초기화
             </ResetBtn>
           </ResetBox>
         </ProductTypeSubBox>
       </ProductTypeBox>
-    </>
+    </div>
   );
 }

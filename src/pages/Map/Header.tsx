@@ -30,21 +30,19 @@ import {
   RentPriceSlider,
 } from '@/components/map/FilterMenu/HeaderMenu';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductType from './HeaderFilter/ProductType';
+import TransactionType from './HeaderFilter/TransactionType';
 
 export default function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+
   const [productType, setProductType] = useState({
     type: 'house',
     sub: ['아파트'],
   });
 
-  const [buyingMax, setBuyingMax] = useState([25000, 50000]);
-  const [returnPriceMax, setReturnPriceMax] = useState([5000, 10000]);
-
   const [selectOption, setSelectOption] = useState('Real');
-  const [menuClicked, setMenuClicked] = useState(null);
-
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectOption(event.target.value);
   };
@@ -54,11 +52,8 @@ export default function Header() {
     { value: 'Product', label: '매물지도' },
   ];
 
-  let buyingPrice = buyingMax.toString().split(',');
-  let returnPrice = returnPriceMax.toString().split(',');
-
   return (
-    <>
+    <div>
       <ModeBox>
         <Select
           options={options}
@@ -67,7 +62,12 @@ export default function Header() {
         />
         <FilterHeader>
           <FilterBox>
-            <SProductType productType={productType}>
+            <SProductType
+              productType={productType}
+              onClick={(e) => {
+                setIsOpen(true);
+              }}
+            >
               {productType.sub}
               <ArrowBtn />
             </SProductType>
@@ -101,71 +101,10 @@ export default function Header() {
         selectOption={selectOption}
         productType={productType}
         setProductType={setProductType}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
       />
-      <TransactionTypeBox>
-        <TransactionTextBox>
-          <TransactionTypeText>거래 유형</TransactionTypeText>
-          <DuplicateText>중복 선택 가능</DuplicateText>
-        </TransactionTextBox>
-        <CheckBox />
-        <GubunLine />
-        <SliderBox>
-          <PriceText>가격</PriceText>
-          <BuyingPriceSliderBox>매매가</BuyingPriceSliderBox>
-          <BuyingRangeBox>
-            {parseInt(buyingPrice[0]) < 10000
-              ? buyingPrice[0]?.substring(0, 1) +
-                '억' +
-                ' ~ ' +
-                (parseInt(buyingPrice[1]) < 10000
-                  ? buyingPrice[1]?.substring(0, 1) + '억'
-                  : buyingPrice[1]?.substring(0, 2) + '억')
-              : buyingPrice[0]?.substring(0, 2) +
-                '억' +
-                ' ~ ' +
-                (parseInt(buyingPrice[1]) < 10000
-                  ? buyingPrice[1]?.substring(0, 1) + '억'
-                  : buyingPrice[1]?.substring(0, 2) + '억')}
-          </BuyingRangeBox>
-          <div
-            style={{
-              marginTop: '80px',
-            }}
-          >
-            <BuyingPriceSlider setBuyingMax={setBuyingMax} />
-          </div>
-          <ReturnPriceSliderBox>보증금</ReturnPriceSliderBox>
-          <ReturnRangeBox>
-            {parseInt(returnPrice[0]) < 1000
-              ? returnPrice[0]?.substring(0, 1) +
-                '천 만원' +
-                ' ~ ' +
-                (parseInt(returnPrice[1]) < 10000
-                  ? returnPrice[1]?.substring(0, 1) + '억'
-                  : returnPrice[1]?.substring(0, 2) + '억')
-              : returnPrice[0]?.substring(0, 1) +
-                '억' +
-                ' ~ ' +
-                (parseInt(returnPrice[1]) < 10000
-                  ? returnPrice[1]?.substring(0, 1) + '억'
-                  : returnPrice[1]?.substring(0, 2) + '억')}
-          </ReturnRangeBox>
-          <div
-            style={{
-              marginTop: '60px',
-            }}
-          >
-            <ReturnPriceSlider setReturnPriceMax={setReturnPriceMax} />
-          </div>
-          <div
-            style={{
-              marginTop: '80px',
-            }}
-          >
-            <RentPriceSlider />
-          </div>
-        </SliderBox>
-      </TransactionTypeBox>
-    </>
+      <TransactionType />
+    </div>
   );
 }

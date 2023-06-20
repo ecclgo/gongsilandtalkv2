@@ -50,7 +50,7 @@ export const CouSubBox = styled.div`
   top: 60px;
 `;
 
-export const ApartCoup = styled.div`
+export const ApartCoup = styled.div<Props>`
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -62,9 +62,13 @@ export const ApartCoup = styled.div`
   width: 98px;
   height: 34px;
 
-  background: rgba(241, 99, 65, 0.1);
-  border: 1px solid #F16341;
-  color: #F16341;
+  background: ${(props) =>
+    `${props.changeSubMenu === 12 ? 'rgba(241, 99, 65, 0.1)' : ' #FFFFFF'}`};
+  border: ${(props) =>
+    `${
+      props.changeSubMenu === 12 ? '1px solid #F16341' : '1px solid #D5D4D4'
+    }`};
+  color: ${(props) => `${props.changeSubMenu === 12 ? '#F16341' : '#9E9E9E'}`};
 
   border-radius: 50px;
   font-family: 'Spoqa Han Sans Neo';
@@ -79,7 +83,7 @@ export const ApartCoup = styled.div`
   cursor: pointer;
 `;
 
-export const OfficetelCoup = styled.div`
+export const OfficetelCoup = styled.div<Props>`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -92,10 +96,14 @@ export const OfficetelCoup = styled.div`
   width: 111px;
   height: 34px;
 
-  background: #FFFFFF;
-  border: 1px solid #D5D4D4;
-  color: #9E9E9E;
-  
+  background: ${(props) =>
+    `${props.changeSubMenu === 13 ? 'rgba(241, 99, 65, 0.1)' : ' #FFFFFF'}`};
+  border: ${(props) =>
+    `${
+      props.changeSubMenu === 13 ? '1px solid #F16341' : '1px solid #D5D4D4'
+    }`};
+  color: ${(props) => `${props.changeSubMenu === 13 ? '#F16341' : '#9E9E9E'}`};
+
   border-radius: 50px;
   font-family: 'Spoqa Han Sans Neo';
   font-style: normal;
@@ -110,7 +118,7 @@ export const OfficetelCoup = styled.div`
   cursor: pointer;
 `;
 
-export const BuildingCoup = styled.div`
+export const BuildingCoup = styled.div<Props>`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -123,10 +131,14 @@ export const BuildingCoup = styled.div`
   width: 86px;
   height: 34px;
 
-  background: #FFFFFF;
-  border: 1px solid #D5D4D4;
-  color: #9E9E9E;
-  
+  background: ${(props) =>
+    `${props.changeSubMenu === 14 ? 'rgba(241, 99, 65, 0.1)' : ' #FFFFFF'}`};
+  border: ${(props) =>
+    `${
+      props.changeSubMenu === 14 ? '1px solid #F16341' : '1px solid #D5D4D4'
+    }`};
+  color: ${(props) => `${props.changeSubMenu === 14 ? '#F16341' : '#9E9E9E'}`};
+
   border-radius: 50px;
   font-family: 'Spoqa Han Sans Neo';
   font-style: normal;
@@ -140,18 +152,21 @@ export const BuildingCoup = styled.div`
   cursor: pointer;
 `;
 
-export const JisanCoup = styled.div`
+export const JisanCoup = styled.div<Props>`
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0px;
-  gap: 8px;
-  
-  color: #9E9E9E;
-  background: #FFFFFF;
-  border: 1px solid #D5D4D4;
+  padding: 10px;
+
+  background: ${(props) =>
+    `${props.changeSubMenu === 15 ? 'rgba(241, 99, 65, 0.1)' : ' #FFFFFF'}`};
+  border: ${(props) =>
+    `${
+      props.changeSubMenu === 15 ? '1px solid #F16341' : '1px solid #D5D4D4'
+    }`};
+  color: ${(props) => `${props.changeSubMenu === 15 ? '#F16341' : '#9E9E9E'}`};
   border-radius: 50px;
 
+  position: absolute;
+  top: 45px;
   width: 136px;
   height: 34px;
 
@@ -162,7 +177,7 @@ export const JisanCoup = styled.div`
   line-height: 18px;
   align-items: center;
   text-align: center;
-  display: flex;
+
   letter-spacing: -0.03em;
   cursor: pointer;
 `;

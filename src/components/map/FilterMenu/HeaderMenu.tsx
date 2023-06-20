@@ -14,7 +14,7 @@ type Props = {
 };
 
 export const TransactionTypeBox = styled.div`
-  display: none;
+  display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;
@@ -22,7 +22,7 @@ export const TransactionTypeBox = styled.div`
   position: absolute;
   width: 360px;
   height: 452px;
-  left: 261px;
+  left: 244px;
   top: 112px;
 
   border: 1px solid #d5d4d4;
