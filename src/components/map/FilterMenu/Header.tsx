@@ -16,6 +16,7 @@ type Props = {
   onChange?: React.ChangeEventHandler<HTMLSelectElement> | undefined;
   value?: string;
   productType?: Object;
+  transactionText?: string[] | null;
 };
 
 export const ModeBox = styled.div`
@@ -141,7 +142,7 @@ export const ArrowBtn = styled.div`
   transform: rotate(270deg);
 `;
 
-export const TypePrice = styled.div`
+export const TypePrice = styled.div<Props>`
   box-sizing: border-box;
   display: flex;
   flex-direction: row;

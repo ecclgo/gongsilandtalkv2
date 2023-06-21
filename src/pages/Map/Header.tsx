@@ -12,35 +12,23 @@ import {
   YearOfBuilding,
   YearOfTran,
 } from '@/components/map/FilterMenu/Header';
-import {
-  TransactionTextBox,
-  TransactionTypeText,
-  TransactionTypeBox,
-  DuplicateText,
-  CheckBox,
-  GubunLine,
-  SliderBox,
-  PriceText,
-  BuyingPriceSliderBox,
-  BuyingPriceSlider,
-  BuyingRangeBox,
-  ReturnPriceSliderBox,
-  ReturnRangeBox,
-  ReturnPriceSlider,
-  RentPriceSlider,
-} from '@/components/map/FilterMenu/HeaderMenu';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ProductType from './HeaderFilter/ProductType';
 import TransactionType from './HeaderFilter/TransactionType';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [transactionOpen, setTransactionOpen] = useState(false);
 
   const [productType, setProductType] = useState({
     type: 'house',
     sub: ['아파트'],
   });
+
+  const [transactionText, setTransactionText] = useState(
+    ['buying', 'return', 'rent', 'short']
+  );
 
   const [selectOption, setSelectOption] = useState('Real');
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -71,8 +59,11 @@ export default function Header() {
               {productType.sub}
               <ArrowBtn />
             </SProductType>
-            <TypePrice>
-              거래유형 / 가격
+            <TypePrice
+              transactionText={transactionText}
+              onClick={() => setTransactionOpen(true)}
+            >
+              {transactionText.length === 4 ? '거래유형 / 가격' : '매 ~ / '} 
               <ArrowBtn />
             </TypePrice>
             <Area>
@@ -104,7 +95,11 @@ export default function Header() {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-      <TransactionType />
+      <TransactionType 
+        transactionText={transactionText}
+        transactionOpen={transactionOpen}
+        setTransactionOpen={setTransactionOpen}
+      />
     </div>
   );
 }

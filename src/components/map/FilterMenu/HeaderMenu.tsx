@@ -11,10 +11,12 @@ import styled from 'styled-components';
 type Props = {
   setBuyingMax?: any;
   setReturnPriceMax?: any;
+  setRentPriceMax?: any;
+  transactionOpen?: boolean;
 };
 
-export const TransactionTypeBox = styled.div`
-  display: flex;
+export const TransactionTypeBox = styled.div<Props>`
+  display: ${props => `${(props.transactionOpen ? 'flex' : 'none')}`};
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;
@@ -183,7 +185,31 @@ export const ReturnPriceSliderBox = styled(BuyingPriceSliderBox)`
 `;
 
 export const ReturnRangeBox = styled(BuyingRangeBox)`
+  left: 240px;
   top: 140px;
+`;
+
+export const RentPriceText = styled.span`
+  position: absolute;
+  width: 26px;
+  height: 18px;
+  left: 16px;
+  top: 250px;
+
+  font-family: 'Spoqa Han Sans Neo';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.03em;
+  color: #686564;
+`;
+
+export const RentRagneBox = styled(ReturnRangeBox)`
+  left: 230px;
+  top: 240px;
 `;
 
 export const CheckBox = () => {
@@ -192,6 +218,7 @@ export const CheckBox = () => {
       <CheckboxContainer>
         <Checkbox
           colorScheme="orange"
+          value='buying'
           style={{
             fontFamily: 'Spoqa Han Sans Neo',
             fontStyle: 'normal',
@@ -206,11 +233,13 @@ export const CheckBox = () => {
             width: '51px',
             height: '18px',
           }}
+          defaultChecked
         >
           매매
         </Checkbox>
         <Checkbox
           colorScheme="orange"
+          value='return'
           style={{
             fontFamily: 'Spoqa Han Sans Neo',
             fontStyle: 'normal',
@@ -225,11 +254,13 @@ export const CheckBox = () => {
             width: '51px',
             height: '18px',
           }}
+          defaultChecked
         >
           전세
         </Checkbox>
         <Checkbox
           colorScheme="orange"
+          value='return'
           style={{
             fontFamily: 'Spoqa Han Sans Neo',
             fontStyle: 'normal',
@@ -244,11 +275,13 @@ export const CheckBox = () => {
             width: '51px',
             height: '18px',
           }}
+          defaultChecked
         >
           월세
         </Checkbox>
         <Checkbox
           colorScheme="orange"
+          value='return'
           style={{
             fontFamily: 'Spoqa Han Sans Neo',
             fontStyle: 'normal',
@@ -263,6 +296,7 @@ export const CheckBox = () => {
             width: '100px',
             height: '18px',
           }}
+          defaultChecked
         >
           단기임대
         </Checkbox>
@@ -283,6 +317,7 @@ export const BuyingPriceSlider = ({ setBuyingMax }: Props) => {
         colorScheme="orange"
         onChangeEnd={(val) => setBuyingMax(val)}
         step={1000}
+        isDisabled={false}
       >
         <RangeSliderMark
           value={25000}
@@ -435,7 +470,7 @@ export const ReturnPriceSlider = ({ setReturnPriceMax }: Props) => {
   );
 };
 
-export const RentPriceSlider = () => {
+export const RentPriceSlider = ({ setRentPriceMax }: Props) => {
   return (
     <>
       <RangeSlider
@@ -445,6 +480,7 @@ export const RentPriceSlider = () => {
         max={100}
         defaultValue={[50, 100]}
         colorScheme="orange"
+        onChangeEnd={(val) => setRentPriceMax(val)}
         step={10}
       >
         <RangeSliderMark

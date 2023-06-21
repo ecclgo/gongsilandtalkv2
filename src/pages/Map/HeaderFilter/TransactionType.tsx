@@ -7,6 +7,8 @@ import {
   GubunLine,
   PriceText,
   RentPriceSlider,
+  RentPriceText,
+  RentRagneBox,
   ReturnPriceSlider,
   ReturnPriceSliderBox,
   ReturnRangeBox,
@@ -15,18 +17,49 @@ import {
   TransactionTypeBox,
   TransactionTypeText,
 } from '@/components/map/FilterMenu/HeaderMenu';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-export default function TransactionType() {
+type Props = {
+  transactionOpen: boolean;
+  setTransactionOpen: any;
+  transactionText: string[] | null;
+};
+
+export default function TransactionType({ transactionOpen, setTransactionOpen, transactionText }: Props) {
   const [buyingMax, setBuyingMax] = useState([25000, 50000]);
   const [returnPriceMax, setReturnPriceMax] = useState([5000, 10000]);
+  const [rentPriceMax, setRentPriceMax] = useState([50, 100]);
 
   let buyingPrice = buyingMax.toString().split(',');
   let returnPrice = returnPriceMax.toString().split(',');
+  let rentPrice = rentPriceMax.toString().split(',');
+
+  /**
+    TODO:Checkbox 각각의 상태값 관리하는 로직 만들기
+   */
+
+    const boxRef = useRef<HTMLDivElement>(null);
+
+  const handleDivBox = (e: any) => {
+    if (
+      boxRef.current &&
+      boxRef.current instanceof Element &&
+      !boxRef.current.contains(e.target)
+    ) {
+      setTransactionOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleDivBox);
+    return () => {
+      document.removeEventListener('mousedown', handleDivBox);
+    };
+  }, []);
 
   return (
     <div>
-      <TransactionTypeBox>
+      <TransactionTypeBox transactionOpen={transactionOpen} ref={boxRef}>
         <TransactionTextBox>
           <TransactionTypeText>거래 유형</TransactionTypeText>
           <DuplicateText>중복 선택 가능</DuplicateText>
@@ -86,7 +119,16 @@ export default function TransactionType() {
               marginTop: '80px',
             }}
           >
-            <RentPriceSlider />
+            <RentPriceText>월세</RentPriceText>
+            <RentPriceSlider setRentPriceMax={setRentPriceMax} />
+            <RentRagneBox>
+              {
+                (parseInt(rentPrice[0]?.substring(0, 1)) + '백 만원')
+                + ' ~ ' +
+                (parseInt(rentPrice[1]) < 100 ? rentPrice[1]?.substring(0, 1) +  '백만원' : 
+                rentPrice[1]?.substring(0, 1) + '천 만원')
+              }
+            </RentRagneBox>
           </div>
         </SliderBox>
       </TransactionTypeBox>

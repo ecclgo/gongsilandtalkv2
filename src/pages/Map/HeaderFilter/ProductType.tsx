@@ -54,6 +54,7 @@ export default function ProductType({
   isOpen,
   setIsOpen,
 }: Props) {
+
   const [changeSubMenuBox, setChangeSubMenuBox] = useState(0);
   const [changeSubMenu, setChangeSubMenu] = useState(0);
   const boxRef = useRef<HTMLDivElement>(null);
@@ -130,13 +131,6 @@ export default function ProductType({
         type: 'coupon',
         sub: ['아파트 분양권'],
       });
-    }
-  };
-
-  const handleOverlay = (e: any) => {
-    if (e.target === e.currentTarget) {
-      // console.log('div 창 밖 이벤트');
-      console.log('div 창 안 이벤트');
     }
   };
 
