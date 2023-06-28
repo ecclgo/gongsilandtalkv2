@@ -20,15 +20,26 @@ import TransactionType from './HeaderFilter/TransactionType';
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [transactionOpen, setTransactionOpen] = useState(false);
+  const [buyingText, setBuyingText] = useState('');
+
+  const [isChecked, setIsChecked] = useState({
+    buying: true,
+    return: true,
+    rent: true,
+    short: true,
+  });
 
   const [productType, setProductType] = useState({
     type: 'house',
     sub: ['아파트'],
   });
 
-  const [transactionText, setTransactionText] = useState(
-    ['buying', 'return', 'rent', 'short']
-  );
+  const [transactionText, setTransactionText] = useState([
+    'buying',
+    'return',
+    'rent',
+    'short',
+  ]);
 
   const [selectOption, setSelectOption] = useState('Real');
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -63,7 +74,10 @@ export default function Header() {
               transactionText={transactionText}
               onClick={() => setTransactionOpen(true)}
             >
-              {transactionText.length === 4 ? '거래유형 / 가격' : '매 ~ / '} 
+              {
+                // isChecked.buying ? '매 ~' : '거래유형/가격'
+                buyingText
+              }
               <ArrowBtn />
             </TypePrice>
             <Area>
@@ -95,10 +109,13 @@ export default function Header() {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-      <TransactionType 
+      <TransactionType
+        isChecked={isChecked}
+        setIsChecked={setIsChecked}
         transactionText={transactionText}
         transactionOpen={transactionOpen}
         setTransactionOpen={setTransactionOpen}
+        setBuyingText={setBuyingText}
       />
     </div>
   );

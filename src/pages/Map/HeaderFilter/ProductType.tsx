@@ -54,7 +54,6 @@ export default function ProductType({
   isOpen,
   setIsOpen,
 }: Props) {
-
   const [changeSubMenuBox, setChangeSubMenuBox] = useState(0);
   const [changeSubMenu, setChangeSubMenu] = useState(0);
   const boxRef = useRef<HTMLDivElement>(null);

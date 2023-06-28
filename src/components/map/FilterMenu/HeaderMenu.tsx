@@ -8,15 +8,25 @@ import {
 } from '@chakra-ui/react';
 import styled from 'styled-components';
 
+type Object = {
+  buying: boolean;
+  return: boolean;
+  rent: boolean;
+  short: boolean;
+};
+
 type Props = {
   setBuyingMax?: any;
   setReturnPriceMax?: any;
   setRentPriceMax?: any;
   transactionOpen?: boolean;
+  setIsChecked?: any;
+  isChecked?: Object;
+  steps?: number;
 };
 
 export const TransactionTypeBox = styled.div<Props>`
-  display: ${props => `${(props.transactionOpen ? 'flex' : 'none')}`};
+  display: ${(props) => `${props.transactionOpen ? 'flex' : 'none'}`};
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;
@@ -212,13 +222,13 @@ export const RentRagneBox = styled(ReturnRangeBox)`
   top: 240px;
 `;
 
-export const CheckBox = () => {
+export const CheckBox = ({ isChecked, setIsChecked }: Props) => {
   return (
     <>
       <CheckboxContainer>
         <Checkbox
           colorScheme="orange"
-          value='buying'
+          value="buying"
           style={{
             fontFamily: 'Spoqa Han Sans Neo',
             fontStyle: 'normal',
@@ -234,12 +244,21 @@ export const CheckBox = () => {
             height: '18px',
           }}
           defaultChecked
+          isChecked={isChecked?.buying}
+          onChange={() => {
+            setIsChecked((prev: any) => {
+              return {
+                ...prev,
+                buying: !isChecked?.buying,
+              };
+            });
+          }}
         >
           매매
         </Checkbox>
         <Checkbox
           colorScheme="orange"
-          value='return'
+          value="return"
           style={{
             fontFamily: 'Spoqa Han Sans Neo',
             fontStyle: 'normal',
@@ -255,12 +274,21 @@ export const CheckBox = () => {
             height: '18px',
           }}
           defaultChecked
+          isChecked={isChecked?.return}
+          onChange={() => {
+            setIsChecked((prev: any) => {
+              return {
+                ...prev,
+                return: !isChecked?.return,
+              };
+            });
+          }}
         >
           전세
         </Checkbox>
         <Checkbox
           colorScheme="orange"
-          value='return'
+          value="return"
           style={{
             fontFamily: 'Spoqa Han Sans Neo',
             fontStyle: 'normal',
@@ -276,12 +304,21 @@ export const CheckBox = () => {
             height: '18px',
           }}
           defaultChecked
+          isChecked={isChecked?.rent}
+          onChange={() => {
+            setIsChecked((prev: any) => {
+              return {
+                ...prev,
+                rent: !isChecked?.rent,
+              };
+            });
+          }}
         >
           월세
         </Checkbox>
         <Checkbox
           colorScheme="orange"
-          value='return'
+          value="return"
           style={{
             fontFamily: 'Spoqa Han Sans Neo',
             fontStyle: 'normal',
@@ -297,6 +334,15 @@ export const CheckBox = () => {
             height: '18px',
           }}
           defaultChecked
+          isChecked={isChecked?.short}
+          onChange={() => {
+            setIsChecked((prev: any) => {
+              return {
+                ...prev,
+                short: !isChecked?.short,
+              };
+            });
+          }}
         >
           단기임대
         </Checkbox>
@@ -305,19 +351,103 @@ export const CheckBox = () => {
   );
 };
 
-export const BuyingPriceSlider = ({ setBuyingMax }: Props) => {
+export const BuyingPriceSlider = ({ setBuyingMax, steps, isChecked }: Props) => {
   return (
     <>
       <RangeSlider
         aria-label={['min', 'max']}
         aria-valuetext={['min', 'max']}
-        min={0}
+        min={1000}
+        max={200000}
+        defaultValue={[100000, 200000]}
+        colorScheme="orange"
+        onChangeEnd={(val) => setBuyingMax(val)}
+        step={steps}
+        isDisabled={!isChecked?.buying}
+      >
+        <RangeSliderMark
+          value={1000}
+          mt="3"
+          fontSize="sm"
+          style={{
+            fontFamily: 'Spoqa Han Sans Neo',
+            fontStyle: 'normal',
+            fontWeight: 400,
+            fontSize: '11px',
+            lineHeight: '14px',
+            display: 'flex',
+            alignItems: 'center',
+            textAlign: 'center',
+            letterSpacing: '-0.03em',
+            color: '#9D9999',
+          }}
+        >
+          ~1천만
+        </RangeSliderMark>
+        <RangeSliderMark
+          value={100000}
+          mt="3"
+          ml="-3"
+          fontSize="sm"
+          style={{
+            fontFamily: 'Spoqa Han Sans Neo',
+            fontStyle: 'normal',
+            fontWeight: 400,
+            fontSize: '11px',
+            lineHeight: '14px',
+            display: 'flex',
+            alignItems: 'center',
+            textAlign: 'center',
+            letterSpacing: '-0.03em',
+            color: '#9D9999',
+          }}
+        >
+          10억
+        </RangeSliderMark>
+        <RangeSliderMark
+          value={200000}
+          mt="3"
+          ml="-6"
+          fontSize="sm"
+          style={{
+            fontFamily: 'Spoqa Han Sans Neo',
+            fontStyle: 'normal',
+            fontWeight: 400,
+            fontSize: '11px',
+            lineHeight: '14px',
+            display: 'flex',
+            alignItems: 'center',
+            textAlign: 'center',
+            letterSpacing: '-0.03em',
+            color: '#9D9999',
+            marginRight: '10px',
+            width: '100px',
+          }}
+        >
+          20억~
+        </RangeSliderMark>
+        <RangeSliderTrack>
+          <RangeSliderFilledTrack />
+        </RangeSliderTrack>
+        <RangeSliderThumb index={0} />
+        <RangeSliderThumb index={1} />
+      </RangeSlider>
+    </>
+  );
+};
+
+export const ReturnPriceSlider = ({ setReturnPriceMax }: Props) => {
+  return (
+    <>
+      <RangeSlider
+        aria-label={['min', 'max']}
+        aria-valuetext={['min', 'max']}
+        min={100}
         max={50000}
         defaultValue={[25000, 50000]}
         colorScheme="orange"
-        onChangeEnd={(val) => setBuyingMax(val)}
-        step={1000}
-        isDisabled={false}
+        onChangeEnd={(val) => setReturnPriceMax(val)}
+        step={100}
       >
         <RangeSliderMark
           value={25000}
@@ -337,7 +467,7 @@ export const BuyingPriceSlider = ({ setBuyingMax }: Props) => {
             color: '#9D9999',
           }}
         >
-          25억
+          2억5천
         </RangeSliderMark>
         <RangeSliderMark
           value={50000}
@@ -355,12 +485,14 @@ export const BuyingPriceSlider = ({ setBuyingMax }: Props) => {
             textAlign: 'center',
             letterSpacing: '-0.03em',
             color: '#9D9999',
+            marginRight: '10px',
+            width: '100px',
           }}
         >
-          50억
+          5억~
         </RangeSliderMark>
         <RangeSliderMark
-          value={0}
+          value={100}
           mt="3"
           fontSize="sm"
           style={{
@@ -376,89 +508,7 @@ export const BuyingPriceSlider = ({ setBuyingMax }: Props) => {
             color: '#9D9999',
           }}
         >
-          0
-        </RangeSliderMark>
-        <RangeSliderTrack>
-          <RangeSliderFilledTrack />
-        </RangeSliderTrack>
-        <RangeSliderThumb index={0} />
-        <RangeSliderThumb index={1} />
-      </RangeSlider>
-    </>
-  );
-};
-
-export const ReturnPriceSlider = ({ setReturnPriceMax }: Props) => {
-  return (
-    <>
-      <RangeSlider
-        aria-label={['min', 'max']}
-        aria-valuetext={['min', 'max']}
-        min={0}
-        max={10000}
-        defaultValue={[5000, 10000]}
-        colorScheme="orange"
-        onChangeEnd={(val) => setReturnPriceMax(val)}
-        step={100}
-      >
-        <RangeSliderMark
-          value={5000}
-          mt="3"
-          ml="-3"
-          fontSize="sm"
-          style={{
-            fontFamily: 'Spoqa Han Sans Neo',
-            fontStyle: 'normal',
-            fontWeight: 400,
-            fontSize: '11px',
-            lineHeight: '14px',
-            display: 'flex',
-            alignItems: 'center',
-            textAlign: 'center',
-            letterSpacing: '-0.03em',
-            color: '#9D9999',
-          }}
-        >
-          5억
-        </RangeSliderMark>
-        <RangeSliderMark
-          value={10000}
-          mt="3"
-          ml="-6"
-          fontSize="sm"
-          style={{
-            fontFamily: 'Spoqa Han Sans Neo',
-            fontStyle: 'normal',
-            fontWeight: 400,
-            fontSize: '11px',
-            lineHeight: '14px',
-            display: 'flex',
-            alignItems: 'center',
-            textAlign: 'center',
-            letterSpacing: '-0.03em',
-            color: '#9D9999',
-          }}
-        >
-          10억
-        </RangeSliderMark>
-        <RangeSliderMark
-          value={0}
-          mt="3"
-          fontSize="sm"
-          style={{
-            fontFamily: 'Spoqa Han Sans Neo',
-            fontStyle: 'normal',
-            fontWeight: 400,
-            fontSize: '11px',
-            lineHeight: '14px',
-            display: 'flex',
-            alignItems: 'center',
-            textAlign: 'center',
-            letterSpacing: '-0.03em',
-            color: '#9D9999',
-          }}
-        >
-          0
+          ~100만
         </RangeSliderMark>
         <RangeSliderTrack>
           <RangeSliderFilledTrack />
@@ -519,9 +569,11 @@ export const RentPriceSlider = ({ setRentPriceMax }: Props) => {
             textAlign: 'center',
             letterSpacing: '-0.03em',
             color: '#9D9999',
+            marginRight: '10px',
+            width: '100px',
           }}
         >
-          1천만
+          1천만~
         </RangeSliderMark>
         <RangeSliderMark
           value={0}
@@ -540,7 +592,7 @@ export const RentPriceSlider = ({ setRentPriceMax }: Props) => {
             color: '#9D9999',
           }}
         >
-          0
+          ~10만
         </RangeSliderMark>
         <RangeSliderTrack>
           <RangeSliderFilledTrack />
