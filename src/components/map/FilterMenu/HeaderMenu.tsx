@@ -23,6 +23,8 @@ type Props = {
   setIsChecked?: any;
   isChecked?: Object;
   steps?: number;
+  returnSteps?: number;
+  rentSteps?: number;
 };
 
 export const TransactionTypeBox = styled.div<Props>`
@@ -195,7 +197,7 @@ export const ReturnPriceSliderBox = styled(BuyingPriceSliderBox)`
 `;
 
 export const ReturnRangeBox = styled(BuyingRangeBox)`
-  left: 240px;
+  left: 250px;
   top: 140px;
 `;
 
@@ -218,7 +220,7 @@ export const RentPriceText = styled.span`
 `;
 
 export const RentRagneBox = styled(ReturnRangeBox)`
-  left: 230px;
+  left: 250px;
   top: 240px;
 `;
 
@@ -351,7 +353,11 @@ export const CheckBox = ({ isChecked, setIsChecked }: Props) => {
   );
 };
 
-export const BuyingPriceSlider = ({ setBuyingMax, steps, isChecked }: Props) => {
+export const BuyingPriceSlider = ({
+  setBuyingMax,
+  steps,
+  isChecked,
+}: Props) => {
   return (
     <>
       <RangeSlider
@@ -359,7 +365,7 @@ export const BuyingPriceSlider = ({ setBuyingMax, steps, isChecked }: Props) => 
         aria-valuetext={['min', 'max']}
         min={1000}
         max={200000}
-        defaultValue={[100000, 200000]}
+        defaultValue={[1000, 200000]}
         colorScheme="orange"
         onChangeEnd={(val) => setBuyingMax(val)}
         step={steps}
@@ -436,7 +442,11 @@ export const BuyingPriceSlider = ({ setBuyingMax, steps, isChecked }: Props) => 
   );
 };
 
-export const ReturnPriceSlider = ({ setReturnPriceMax }: Props) => {
+export const ReturnPriceSlider = ({
+  setReturnPriceMax,
+  returnSteps,
+  isChecked,
+}: Props) => {
   return (
     <>
       <RangeSlider
@@ -444,13 +454,14 @@ export const ReturnPriceSlider = ({ setReturnPriceMax }: Props) => {
         aria-valuetext={['min', 'max']}
         min={100}
         max={50000}
-        defaultValue={[25000, 50000]}
+        defaultValue={[100, 50000]}
         colorScheme="orange"
         onChangeEnd={(val) => setReturnPriceMax(val)}
-        step={100}
+        step={returnSteps}
+        isDisabled={!isChecked?.return}
       >
         <RangeSliderMark
-          value={25000}
+          value={30000}
           mt="3"
           ml="-3"
           fontSize="sm"
@@ -467,7 +478,7 @@ export const ReturnPriceSlider = ({ setReturnPriceMax }: Props) => {
             color: '#9D9999',
           }}
         >
-          2억5천
+          3억
         </RangeSliderMark>
         <RangeSliderMark
           value={50000}
@@ -520,21 +531,21 @@ export const ReturnPriceSlider = ({ setReturnPriceMax }: Props) => {
   );
 };
 
-export const RentPriceSlider = ({ setRentPriceMax }: Props) => {
+export const RentPriceSlider = ({ setRentPriceMax, rentSteps }: Props) => {
   return (
     <>
       <RangeSlider
         aria-label={['min', 'max']}
         aria-valuetext={['min', 'max']}
-        min={0}
-        max={100}
-        defaultValue={[50, 100]}
+        min={10}
+        max={1000}
+        defaultValue={[10, 1000]}
         colorScheme="orange"
         onChangeEnd={(val) => setRentPriceMax(val)}
-        step={10}
+        step={rentSteps}
       >
         <RangeSliderMark
-          value={50}
+          value={500}
           mt="3"
           ml="-3"
           fontSize="sm"
@@ -554,7 +565,7 @@ export const RentPriceSlider = ({ setRentPriceMax }: Props) => {
           500만
         </RangeSliderMark>
         <RangeSliderMark
-          value={100}
+          value={1000}
           mt="3"
           ml="-6"
           fontSize="sm"
@@ -576,7 +587,7 @@ export const RentPriceSlider = ({ setRentPriceMax }: Props) => {
           1천만~
         </RangeSliderMark>
         <RangeSliderMark
-          value={0}
+          value={10}
           mt="3"
           fontSize="sm"
           style={{

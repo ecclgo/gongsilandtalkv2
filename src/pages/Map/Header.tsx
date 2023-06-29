@@ -13,7 +13,7 @@ import {
   YearOfTran,
 } from '@/components/map/FilterMenu/Header';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductType from './HeaderFilter/ProductType';
 import TransactionType from './HeaderFilter/TransactionType';
 
@@ -21,6 +21,14 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [transactionOpen, setTransactionOpen] = useState(false);
   const [buyingText, setBuyingText] = useState('');
+  const [returnText, setReturnText] = useState('');
+  const [rentText, setRentText] = useState('');
+  const [selectedTypeText, setSelectedTypeText] = useState({
+    buyingText: '',
+    returnText: '',
+    rentText: '',
+    short: ''
+  });
 
   const [isChecked, setIsChecked] = useState({
     buying: true,
@@ -51,6 +59,46 @@ export default function Header() {
     { value: 'Product', label: '매물지도' },
   ];
 
+
+  const selectedTextType = () => {
+    isChecked.buying ? setSelectedTypeText((prev) => {
+      return {
+        ...prev,
+        buyingText: buyingText
+      }
+    })
+    : null
+
+    isChecked.return ? setSelectedTypeText((prev) => {
+      return {
+        ...prev,
+        returnText: returnText
+      }
+    })
+    : null
+    isChecked.rent ? setSelectedTypeText((prev) => {
+      return {
+        ...prev,
+        rentText: rentText
+      }
+    }) : null
+    isChecked.short ? setSelectedTypeText((prev) => {
+      return {
+        ...prev,
+        short: '/단기임대'
+      }
+    }) : setSelectedTypeText((prev) => {
+      return {
+        ...prev,
+        short: ''
+      }
+    })
+  };
+
+  useEffect(() => {
+    selectedTextType();
+  }, [buyingText, rentText, returnText, isChecked.short]);
+
   return (
     <div>
       <ModeBox>
@@ -74,10 +122,7 @@ export default function Header() {
               transactionText={transactionText}
               onClick={() => setTransactionOpen(true)}
             >
-              {
-                // isChecked.buying ? '매 ~' : '거래유형/가격'
-                buyingText
-              }
+              {selectedTypeText.buyingText + '/' + selectedTypeText.returnText + '/' + selectedTypeText.rentText + selectedTypeText.short}
               <ArrowBtn />
             </TypePrice>
             <Area>
@@ -116,6 +161,8 @@ export default function Header() {
         transactionOpen={transactionOpen}
         setTransactionOpen={setTransactionOpen}
         setBuyingText={setBuyingText}
+        setReturnText={setReturnText}
+        setRentText={setRentText}
       />
     </div>
   );

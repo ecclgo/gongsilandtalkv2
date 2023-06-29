@@ -151,7 +151,6 @@ export const TypePrice = styled.div<Props>`
   padding: 0px 10px;
   gap: 4px;
 
-  width: 115px;
   height: 36px;
 
   background: #ffffff;
@@ -163,7 +162,6 @@ export const TypePrice = styled.div<Props>`
   font-size: 14px;
   line-height: 18px;
 
-  display: flex;
   align-items: center;
   letter-spacing: -0.03em;
 
