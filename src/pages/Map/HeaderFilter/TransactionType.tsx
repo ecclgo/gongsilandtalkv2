@@ -189,8 +189,11 @@ export default function TransactionType({
       setRentText('월~' + max.toString().substring(0, 1) + '십만');
     } else if ((min === 10) && (max === 1000)) {
       setRentText('월세');
+    } else if (isChecked?.rent !== false) {
+      console.log(isChecked.rent);
+      setRentText('');
     }
-  }
+  };
 
 
   const handleStep = () => {
@@ -420,6 +423,7 @@ export default function TransactionType({
             <RentPriceSlider
               setRentPriceMax={setRentPriceMax}
               rentSteps={rentSteps}
+              isChecked={isChecked}
             />
             <RentRagneBox>
               {parseInt(rentPrice[0]) === 10 && parseInt(rentPrice[1]) === 1000

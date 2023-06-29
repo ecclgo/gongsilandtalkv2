@@ -67,21 +67,35 @@ export default function Header() {
         buyingText: buyingText
       }
     })
-    : null
-
+    : setSelectedTypeText((prev) => {
+      return {
+        ...prev,
+        buyingText: ''
+      }
+    })
     isChecked.return ? setSelectedTypeText((prev) => {
       return {
         ...prev,
-        returnText: returnText
+        returnText: '/' + returnText
       }
     })
-    : null
+    : setSelectedTypeText((prev) => {
+      return {
+        ...prev,
+        returnText: ''
+      }
+    })
     isChecked.rent ? setSelectedTypeText((prev) => {
       return {
         ...prev,
-        rentText: rentText
+        rentText: '/' + rentText
       }
-    }) : null
+    }) : setSelectedTypeText((prev) => {
+      return {
+        ...prev,
+        rentText: ''
+      }
+    })
     isChecked.short ? setSelectedTypeText((prev) => {
       return {
         ...prev,
@@ -92,12 +106,13 @@ export default function Header() {
         ...prev,
         short: ''
       }
-    })
+    });
+    
   };
 
   useEffect(() => {
     selectedTextType();
-  }, [buyingText, rentText, returnText, isChecked.short]);
+  }, [buyingText, rentText, returnText, isChecked.short, isChecked.rent, isChecked.return, isChecked.buying]);
 
   return (
     <div>
@@ -122,7 +137,12 @@ export default function Header() {
               transactionText={transactionText}
               onClick={() => setTransactionOpen(true)}
             >
-              {selectedTypeText.buyingText + '/' + selectedTypeText.returnText + '/' + selectedTypeText.rentText + selectedTypeText.short}
+              {
+                (isChecked.buying === false && isChecked.return === false && isChecked.rent === false && isChecked.short === false) ? 
+                '거래유형/가격'
+                :
+                (selectedTypeText.buyingText + selectedTypeText.returnText + selectedTypeText.rentText + selectedTypeText.short)
+              }
               <ArrowBtn />
             </TypePrice>
             <Area>

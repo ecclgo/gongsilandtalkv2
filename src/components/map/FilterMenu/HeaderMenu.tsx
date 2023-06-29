@@ -531,7 +531,7 @@ export const ReturnPriceSlider = ({
   );
 };
 
-export const RentPriceSlider = ({ setRentPriceMax, rentSteps }: Props) => {
+export const RentPriceSlider = ({ setRentPriceMax, rentSteps, isChecked }: Props) => {
   return (
     <>
       <RangeSlider
@@ -543,6 +543,7 @@ export const RentPriceSlider = ({ setRentPriceMax, rentSteps }: Props) => {
         colorScheme="orange"
         onChangeEnd={(val) => setRentPriceMax(val)}
         step={rentSteps}
+        isDisabled={!isChecked?.rent}
       >
         <RangeSliderMark
           value={500}
